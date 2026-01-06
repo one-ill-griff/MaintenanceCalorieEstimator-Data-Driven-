@@ -564,3 +564,4 @@ else:
 
     if confidence < 25:
         st.warning("Because confidence is very low, treat the suggested intake as a rough starting point and adjust as you collect more data.")
+
