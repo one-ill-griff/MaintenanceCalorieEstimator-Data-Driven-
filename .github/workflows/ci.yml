@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+jobs:
+  docker-build-smoke-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t calorie-calculator:ci .
+
+      - name: Run container
+        run: |
+          docker run -d --name app -p 8501:8501 calorie-calculator:ci
+          sleep 6
+
+      - name: Smoke test (Streamlit health)
+        run: curl -f http://localhost:8501/_stcore/health
+
+      - name: Logs on failure
+        if: failure()
+        run: docker logs app
+
+      - name: Cleanup
+        if: always()
+        run: docker rm -f app
