@@ -127,6 +127,31 @@ Then open the local URL Streamlit provides.
 
 ---
 
+## Containerization & CI
+
+This project is fully containerized using Docker and includes a GitHub Actions
+CI pipeline that builds the container and performs a health-check smoke test
+on every push and pull request.
+
+### Run with Docker
+
+```bash
+docker build -t calorie-calculator .
+docker run --rm -p 8501:8501 calorie-calculator
+
+Open http://localhost:8501
+
+Commit it:
+
+```powershell
+git add README.md
+git commit -m "Document Docker containerization and CI pipeline"
+git push
+
+```
+
+---
+
 ## Why This Project
 
 This project demonstrates:
